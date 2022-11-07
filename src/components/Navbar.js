@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthProvider';
 
 const Navbar = () => {
 
     const [navbar, setNavbar] = useState(false);
     //  const {toggle, setToggle} = useContext(ToggleMode);
-//   const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
   
 
-//   const handleSignOut = () => {
-//     logOut()
-//       .then(() => {})
-//       .catch((error) => console.error(error));
-//   };
+   const handleSignOut = () => {
+     logOut()
+       .then(() => {})
+       .catch((error) => console.error(error));
+   };
     return (
         <nav className="w-full bg-pink-400 shadow">
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
@@ -71,45 +72,61 @@ const Navbar = () => {
                                 <a href="javascript:void(0)">Home</a>
                             </li>
                             <li className="text-white hover:text-indigo-200">
-                                <a href="javascript:void(0)">Blog</a>
+                                <NavLink to='/events'>events</NavLink>
                             </li>
                             <li className="text-white hover:text-indigo-200">
                                 <a href="javascript:void(0)">About US</a>
                             </li>
                             <li className="text-white hover:text-indigo-200">
-                                <a href="javascript:void(0)">Contact US</a>
+                                <NavLink to='/contributes'>Contributes</NavLink>
                             </li>
                         </ul>
 
                         <div className="mt-3 space-y-2 lg:hidden md:inline-block">
-                    <a
-                        href="javascript:void(0)"
+                    <NavLink
+                        to="/login"
                         className="inline-block w-full px-4 py-2 text-center text-white bg-gray-600 rounded-md shadow hover:bg-gray-800"
                     >
-                        Sign in
-                    </a>
-                    <a
-                        href="javascript:void(0)"
+                        Log In
+                    </NavLink>
+                    <NavLink
+                        to="/signup"
                         className="inline-block w-full px-4 py-2 text-center text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
                     >
                         Sign up
-                    </a>
+                    </NavLink>
                 </div>
                     </div>
                 </div>
+
+               
                 <div className="hidden space-x-2 md:inline-block">
-                    <a
-                        href="javascript:void(0)"
+                {
+                    user?.email?
+                    <>
+   <NavLink onClick={handleSignOut}
+                        
+                        className="px-4 py-2 text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
+                    >
+                        Log Out
+                    </NavLink>
+                    </>
+                    :
+                    <>
+   <NavLink
+                          to="/login"
                         className="px-4 py-2 text-white bg-gray-600 rounded-md shadow hover:bg-gray-800"
                     >
-                        Sign in
-                    </a>
-                    <a
-                        href="javascript:void(0)"
+                        Log In
+                    </NavLink>
+                    <NavLink
+                          to="/signup"
                         className="px-4 py-2 text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
                     >
                         Sign up
-                    </a>
+                    </NavLink>
+                    </>
+                }
                 </div>
             </div>
         </nav>
